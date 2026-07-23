@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: kbo-predictor
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/kbo}
+    username: ${SPRING_DATASOURCE_USERNAME:kbo}
+    password: ${SPRING_DATASOURCE_PASSWORD:kbo}
+
+  jpa:
+    hibernate:
+      ddl-auto: validate      # 스키마는 Flyway가 관리, JPA는 검증만
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+
+  flyway:
+    enabled: true
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
