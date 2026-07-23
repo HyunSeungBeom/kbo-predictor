@@ -39,6 +39,7 @@ docker compose up --build
 
 - 일정:  `GET http://localhost:8080/api/schedule`  (특정일: `?date=2026-07-20`)
 - 예측:  `GET http://localhost:8080/api/predict?home=OB&away=LG`
+- 순위:  `GET http://localhost:8080/api/standings`  (game 결과에서 실시간 집계)
 - 헬스:  `GET http://localhost:8080/actuator/health`
 - 수집(수동): `POST http://localhost:8080/api/admin/ingest?month=2026-07`
 
@@ -78,7 +79,7 @@ KBO는 공식 오픈 API가 없어, 일정·결과는 공개 출처(KBO 공식 /
 - [x] 프로젝트 뼈대 (Spring Boot 4 · Java/Kotlin · JPA · Flyway · Docker · CI)
 - [x] log5 단일 경기 승리확률 + 테스트
 - [x] **Phase 0** — 수집 파이프라인(출처 추상화 + upsert + 스케줄러 + 수동 트리거). seed 로 동작 / 라이브 어댑터는 엔드포인트 확인만 남음
-- [ ] **Phase 1** — 순위(승/패) 계산, 일정 API 확장
+- [x] **Phase 1** — 순위(승/패/무) 계산 API. `game`(FINAL)에서 실시간 집계(승률·게임차·순위), 단일 진실원천
 - [ ] **Phase 2** — 몬테카를로 진출/우승 확률 + 캐싱
 - [ ] **Phase 3** — Next.js 프론트(대시보드, 내 팀 설정)
 - [ ] **Phase 4** — 배포(Fly.io/Railway) + 배포 링크

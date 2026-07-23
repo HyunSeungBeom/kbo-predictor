@@ -1,27 +1,22 @@
 package com.seungbeom.kbo.prediction
 
-import com.seungbeom.kbo.team.Team
-import com.seungbeom.kbo.team.TeamRepository
+import com.seungbeom.kbo.standings.StandingsService
 import org.springframework.stereotype.Service
 
 /**
- * 저장된 팀 성적을 읽어 승리확률을 계산한다.
+ * 계산된 순위(승률)를 읽어 승리확률을 낸다.
  * 수식 자체는 [Predictions] → Java [Log5] 로 위임 (Kotlin → Java interop).
  */
 @Service
 class PredictionService(
-    private val teamRepository: TeamRepository,
+    private val standingsService: StandingsService,
 ) {
 
-    /** 홈팀이 이길 확률. 팀을 못 찾으면 예외. */
+    /** 홈팀이 이길 확률. 기록이 없는 팀은 승률 0으로 취급. */
     fun homeWinProbability(homeTeamId: String, awayTeamId: String): Double {
-        val home = teamRepository.findById(homeTeamId)
-            .orElseThrow { NoSuchElementException("team not found: $homeTeamId") }
-        val away = teamRepository.findById(awayTeamId)
-            .orElseThrow { NoSuchElementException("team not found: $awayTeamId") }
-        return Predictions.homeWinProbability(home.winPct(), away.winPct())
+        val winPct = standingsService.winPctByTeam()
+        val home = winPct[homeTeamId] ?: 0.0
+        val away = winPct[awayTeamId] ?: 0.0
+        return Predictions.homeWinProbability(home, away)
     }
-
-    private fun Team.winPct(): Double =
-        if (wins + losses == 0) 0.0 else wins.toDouble() / (wins + losses)
 }
