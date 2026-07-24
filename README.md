@@ -68,6 +68,20 @@ docker compose up --build
 [`PredictionsTest.kt`](src/test/kotlin/com/seungbeom/kbo/prediction/PredictionsTest.kt)).
 DB가 필요한 통합 테스트(Testcontainers)는 Phase 2에서 추가 예정.
 
+## 프론트엔드 (`web/`)
+
+Next.js(App Router) + TypeScript + Tailwind + TanStack Query + Recharts. 백엔드 API를 소비하는 대시보드.
+
+```bash
+cd web
+npm install
+npm run dev      # http://localhost:3000  (백엔드가 :8080 에서 떠 있어야 함)
+```
+- 대시보드: 순위표 · 우승확률 차트(몬테카를로) · 오늘 경기 예측
+- 일정 페이지: 날짜별 경기
+- 내 팀 설정: localStorage, 순위·차트에서 하이라이트
+- API 주소는 `web/.env.local`의 `NEXT_PUBLIC_API_BASE`(기본 `http://localhost:8080`). 백엔드는 `app.cors.allowed-origins`로 오리진 허용.
+
 ## 데이터 출처
 
 KBO는 공식 오픈 API가 없어, 일정·결과는 공개 출처(KBO 공식 / 다음 스포츠 등)를
@@ -82,7 +96,7 @@ KBO는 공식 오픈 API가 없어, 일정·결과는 공개 출처(KBO 공식 /
 - [x] **Phase 0** — 수집 파이프라인(출처 추상화 + upsert + 스케줄러 + 수동 트리거). seed 로 동작 / 라이브 어댑터는 엔드포인트 확인만 남음
 - [x] **Phase 1** — 순위(승/패/무) 계산 API. `game`(FINAL)에서 실시간 집계(승률·게임차·순위), 단일 진실원천
 - [x] **Phase 2** — 몬테카를로 진출/우승 확률 (계단식 포스트시즌 시뮬, Random 주입 → 테스트 가능). 캐싱은 후속
-- [ ] **Phase 3** — Next.js 프론트(대시보드, 내 팀 설정)
+- [x] **Phase 3** — Next.js 프론트(`web/`): 순위표·우승확률 차트·경기예측·일정·내 팀 설정
 - [ ] **Phase 4** — 배포(Fly.io/Railway) + 배포 링크
 
 ## 기술 스택
