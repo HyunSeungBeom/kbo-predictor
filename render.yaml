@@ -1,0 +1,32 @@
+# Render 블루프린트: 백엔드(Docker) + 무료 Postgres.
+# render.com > New > Blueprint 에서 이 레포를 연결하면 아래 구성이 그대로 생성된다.
+# 주의: 무료 웹 서비스는 15분 유휴 시 슬립(첫 접속 콜드스타트), 무료 DB는 약 30일 후 만료.
+
+databases:
+  - name: kbo-db
+    databaseName: kbo
+    plan: free
+
+services:
+  - type: web
+    name: kbo-predictor-api
+    runtime: docker
+    plan: free
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: DB_HOST
+        fromDatabase: { name: kbo-db, property: host }
+      - key: DB_PORT
+        fromDatabase: { name: kbo-db, property: port }
+      - key: DB_NAME
+        fromDatabase: { name: kbo-db, property: database }
+      - key: DB_USER
+        fromDatabase: { name: kbo-db, property: user }
+      - key: DB_PASSWORD
+        fromDatabase: { name: kbo-db, property: password }
+      # 힙을 컨테이너 메모리에 맞춤(무료 512MB)
+      - key: JAVA_TOOL_OPTIONS
+        value: -XX:MaxRAMPercentage=70.0
+      # 배포 후 Vercel 프론트 URL로 채운다 (예: https://kbo-web.vercel.app). 콤마로 여러 개 가능.
+      - key: APP_CORS_ALLOWED_ORIGINS
+        sync: false

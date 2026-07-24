@@ -2,10 +2,11 @@ spring:
   application:
     name: kbo-predictor
 
+  # 배포(Render 등)에선 DB_HOST/DB_PORT/... 개별 값으로 조립. 로컬은 기본값.
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/kbo}
-    username: ${SPRING_DATASOURCE_USERNAME:kbo}
-    password: ${SPRING_DATASOURCE_PASSWORD:kbo}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:kbo}}
+    username: ${SPRING_DATASOURCE_USERNAME:${DB_USER:kbo}}
+    password: ${SPRING_DATASOURCE_PASSWORD:${DB_PASSWORD:kbo}}
 
   jpa:
     hibernate:
@@ -19,7 +20,7 @@ spring:
     enabled: true
 
 server:
-  port: 8080
+  port: ${PORT:8080}   # Render 등은 PORT 주입
 
 management:
   endpoints:
