@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { useFavoriteTeam } from "@/app/providers";
+import { useFavoriteTeam } from "@/lib/useFavoriteTeam";
 import { getStandings } from "@/lib/api";
 import { teamName } from "@/lib/teams";
 import Card from "./Card";

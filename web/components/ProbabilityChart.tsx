@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { Bar, BarChart, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { useFavoriteTeam } from "@/app/providers";
+import { useFavoriteTeam } from "@/lib/useFavoriteTeam";
 import { getSimulation } from "@/lib/api";
 import { teamColor, teamName } from "@/lib/teams";
 import Card from "./Card";

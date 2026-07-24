@@ -1,6 +1,6 @@
 "use client";
 
-import { useFavoriteTeam } from "@/app/providers";
+import { useFavoriteTeam } from "@/lib/useFavoriteTeam";
 import { TEAM_IDS, teamName } from "@/lib/teams";
 
 export default function TeamPicker() {
