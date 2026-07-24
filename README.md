@@ -21,7 +21,7 @@ KBO 경기 일정과 **가을야구 진출확률·우승확률**, 그리고 **�
 | 예측 | 방법 | 상태 |
 |------|------|------|
 | 오늘 경기 승리확률 | **log5** (승률 기반) + 홈 어드밴티지 | ✅ 구현 |
-| 가을야구 진출확률 / 우승확률 | **몬테카를로 시뮬레이션** (잔여 일정 N회 가상 플레이) | ⏳ Phase 2 |
+| 가을야구 진출확률 / 우승확률 | **몬테카를로 시뮬레이션** (잔여 일정 N회 가상 플레이 + 계단식 포스트시즌) | ✅ 구현 |
 | 승률 대신 Elo·선발투수 반영 | 레이팅 시스템 | 🔮 v2 |
 
 ## 실행 방법
@@ -40,6 +40,7 @@ docker compose up --build
 - 일정:  `GET http://localhost:8080/api/schedule`  (특정일: `?date=2026-07-20`)
 - 예측:  `GET http://localhost:8080/api/predict?home=OB&away=LG`
 - 순위:  `GET http://localhost:8080/api/standings`  (game 결과에서 실시간 집계)
+- 확률:  `GET http://localhost:8080/api/simulation?iterations=10000`  (몬테카를로 진출/우승 확률)
 - 헬스:  `GET http://localhost:8080/actuator/health`
 - 수집(수동): `POST http://localhost:8080/api/admin/ingest?month=2026-07`
 
@@ -80,7 +81,7 @@ KBO는 공식 오픈 API가 없어, 일정·결과는 공개 출처(KBO 공식 /
 - [x] log5 단일 경기 승리확률 + 테스트
 - [x] **Phase 0** — 수집 파이프라인(출처 추상화 + upsert + 스케줄러 + 수동 트리거). seed 로 동작 / 라이브 어댑터는 엔드포인트 확인만 남음
 - [x] **Phase 1** — 순위(승/패/무) 계산 API. `game`(FINAL)에서 실시간 집계(승률·게임차·순위), 단일 진실원천
-- [ ] **Phase 2** — 몬테카를로 진출/우승 확률 + 캐싱
+- [x] **Phase 2** — 몬테카를로 진출/우승 확률 (계단식 포스트시즌 시뮬, Random 주입 → 테스트 가능). 캐싱은 후속
 - [ ] **Phase 3** — Next.js 프론트(대시보드, 내 팀 설정)
 - [ ] **Phase 4** — 배포(Fly.io/Railway) + 배포 링크
 
