@@ -1,0 +1,269 @@
+{
+  "code": 200,
+  "message": null,
+  "document": {
+    "schedule": {
+      "20260804": [
+        {
+          "gameId": 80101044,
+          "matchSeq": 10,
+          "startDate": "20260804",
+          "startTime": "1830",
+          "periodType": "END",
+          "gameStatus": "END",
+          "op": {
+            "broadcast": "SPOTV2",
+            "importance": 1,
+            "vod": 6133316,
+            "searchVideo": 1,
+            "textRelay": true
+          },
+          "seasonKey": "2026",
+          "seasonName": "2026 KBO리그",
+          "leagueCode": "KBO",
+          "leagueName": "KBO리그",
+          "fieldName": "인천 SSG 랜더스 필드",
+          "gameType": {
+            "gameTypeId": 2,
+            "nameKo": "시즌",
+            "name": "시즌"
+          },
+          "gameDetailType": {
+            "gameDetailTypeId": 103,
+            "nameKo": "페넌트레이스",
+            "name": "페넌트레이스"
+          },
+          "homeTeamId": 384,
+          "homeTeamName": "SSG",
+          "homeWlt": "W",
+          "homeResult": "10",
+          "awayTeamId": 387,
+          "awayTeamName": "LG",
+          "awayWlt": "L",
+          "awayResult": "8",
+          "homeTeamImageUrl": "http://t1.daumcdn.net/media/img-section/sports13/logo/team/1/SK_300300.png",
+          "awayTeamImageUrl": "http://t1.daumcdn.net/media/img-section/sports13/logo/team/1/LG_300300.png",
+          "homeStartPitcher": "김민준",
+          "awayStartPitcher": "웰스",
+          "winPitcher": "전영준",
+          "losePitcher": "박시원"
+        },
+        {
+          "gameId": 80101042,
+          "matchSeq": 10,
+          "startDate": "20260804",
+          "startTime": "1830",
+          "periodType": "END",
+          "gameStatus": "END",
+          "op": {
+            "broadcast": "SBS SPORTS",
+            "importance": 1,
+            "vod": 6133130,
+            "searchVideo": 1,
+            "textRelay": true
+          },
+          "seasonKey": "2026",
+          "seasonName": "2026 KBO리그",
+          "leagueCode": "KBO",
+          "leagueName": "KBO리그",
+          "fieldName": "대구 삼성 라이온즈 파크",
+          "gameType": {
+            "gameTypeId": 2,
+            "nameKo": "시즌",
+            "name": "시즌"
+          },
+          "gameDetailType": {
+            "gameDetailTypeId": 103,
+            "nameKo": "페넌트레이스",
+            "name": "페넌트레이스"
+          },
+          "homeTeamId": 383,
+          "homeTeamName": "삼성",
+          "homeWlt": "L",
+          "homeResult": "1",
+          "awayTeamId": 390,
+          "awayTeamName": "한화",
+          "awayWlt": "W",
+          "awayResult": "4",
+          "homeTeamImageUrl": "http://t1.daumcdn.net/media/img-section/sports13/logo/team/1/SS_300300.png",
+          "awayTeamImageUrl": "http://t1.daumcdn.net/media/img-section/sports13/logo/team/1/HH_300300.png",
+          "homeStartPitcher": "양창섭",
+          "awayStartPitcher": "왕옌청",
+          "winPitcher": "왕옌청",
+          "losePitcher": "양창섭"
+        }
+      ],
+      "20260825": [
+        {
+          "gameId": 80101136,
+          "matchSeq": 13,
+          "startDate": "20260825",
+          "startTime": "1830",
+          "periodType": "END",
+          "gameStatus": "END",
+          "op": {
+            "broadcast": "KBS N SPORTS",
+            "importance": 1,
+            "vod": 6133415,
+            "searchVideo": 1,
+            "textRelay": true
+          },
+          "seasonKey": "2026",
+          "seasonName": "2026 KBO리그",
+          "leagueCode": "KBO",
+          "leagueName": "KBO리그",
+          "fieldName": "고척 스카이돔",
+          "gameType": {
+            "gameTypeId": 2,
+            "nameKo": "시즌",
+            "name": "시즌"
+          },
+          "gameDetailType": {
+            "gameDetailTypeId": 103,
+            "nameKo": "페넌트레이스",
+            "name": "페넌트레이스"
+          },
+          "homeTeamId": 382,
+          "homeTeamName": "키움",
+          "homeWlt": "D",
+          "homeResult": "3",
+          "awayTeamId": 383,
+          "awayTeamName": "삼성",
+          "awayWlt": "D",
+          "awayResult": "3",
+          "homeTeamImageUrl": "http://t1.daumcdn.net/media/img-section/sports13/logo/team/1/WO_300300.png",
+          "awayTeamImageUrl": "http://t1.daumcdn.net/media/img-section/sports13/logo/team/1/SS_300300.png",
+          "homeStartPitcher": "알칸타라",
+          "awayStartPitcher": "보스",
+          "winPitcher": null,
+          "losePitcher": null
+        }
+      ],
+      "20260805": [
+        {
+          "gameId": 80101047,
+          "matchSeq": 11,
+          "startDate": "20260805",
+          "startTime": "1830",
+          "periodType": "CANCEL",
+          "gameStatus": "CANCEL",
+          "op": {
+            "broadcast": "SBS SPORTS",
+            "textRelay": true
+          },
+          "seasonKey": "2026",
+          "seasonName": "2026 KBO리그",
+          "leagueCode": "KBO",
+          "leagueName": "KBO리그",
+          "fieldName": "대구 삼성 라이온즈 파크",
+          "gameType": {
+            "gameTypeId": 2,
+            "nameKo": "시즌",
+            "name": "시즌"
+          },
+          "gameDetailType": {
+            "gameDetailTypeId": 103,
+            "nameKo": "페넌트레이스",
+            "name": "페넌트레이스"
+          },
+          "homeTeamId": 383,
+          "homeTeamName": "삼성",
+          "homeWlt": null,
+          "homeResult": null,
+          "awayTeamId": 390,
+          "awayTeamName": "한화",
+          "awayWlt": null,
+          "awayResult": null,
+          "homeTeamImageUrl": "http://t1.daumcdn.net/media/img-section/sports13/logo/team/1/SS_300300.png",
+          "awayTeamImageUrl": "http://t1.daumcdn.net/media/img-section/sports13/logo/team/1/HH_300300.png",
+          "homeStartPitcher": null,
+          "awayStartPitcher": null,
+          "winPitcher": null,
+          "losePitcher": null
+        }
+      ],
+      "20260827": [
+        {
+          "gameId": 80101142,
+          "matchSeq": 14,
+          "startDate": "20260827",
+          "startTime": "1830",
+          "periodType": "BEFORE",
+          "gameStatus": "BEFORE",
+          "op": {
+            "broadcast": "SPOTV",
+            "importance": 1,
+            "textRelay": true
+          },
+          "seasonKey": "2026",
+          "seasonName": "2026 KBO리그",
+          "leagueCode": "KBO",
+          "leagueName": "KBO리그",
+          "fieldName": "인천 SSG 랜더스 필드",
+          "gameType": {
+            "gameTypeId": 2,
+            "nameKo": "시즌",
+            "name": "시즌"
+          },
+          "gameDetailType": {
+            "gameDetailTypeId": 103,
+            "nameKo": "페넌트레이스",
+            "name": "페넌트레이스"
+          },
+          "homeTeamId": 384,
+          "homeTeamName": "SSG",
+          "homeWlt": null,
+          "homeResult": null,
+          "awayTeamId": 390,
+          "awayTeamName": "한화",
+          "awayWlt": null,
+          "awayResult": null,
+          "homeTeamImageUrl": "http://t1.daumcdn.net/media/img-section/sports13/logo/team/1/SK_300300.png",
+          "awayTeamImageUrl": "http://t1.daumcdn.net/media/img-section/sports13/logo/team/1/HH_300300.png",
+          "homeStartPitcher": null,
+          "awayStartPitcher": null,
+          "winPitcher": null,
+          "losePitcher": null
+        }
+      ],
+      "20260816": [
+        {
+          "gameId": 80101097,
+          "matchSeq": 13,
+          "startDate": "20260816",
+          "startTime": "1900",
+          "periodType": "CANCEL",
+          "gameStatus": "CANCEL",
+          "op": {
+            "broadcast": "KBS N SPORTS",
+            "searchVideo": 1,
+            "textRelay": true
+          },
+          "seasonKey": "2026",
+          "seasonName": "2026 KBO리그",
+          "leagueCode": "KBO",
+          "leagueName": "KBO리그",
+          "fieldName": "대구 삼성 라이온즈 파크",
+          "gameType": null,
+          "gameDetailType": null,
+          "homeTeamId": 383,
+          "homeTeamName": "삼성",
+          "homeWlt": null,
+          "homeResult": null,
+          "awayTeamId": 390,
+          "awayTeamName": "한화",
+          "awayWlt": null,
+          "awayResult": null,
+          "homeTeamImageUrl": "http://t1.daumcdn.net/media/img-section/sports13/logo/team/1/SS_300300.png",
+          "awayTeamImageUrl": "http://t1.daumcdn.net/media/img-section/sports13/logo/team/1/HH_300300.png",
+          "homeStartPitcher": null,
+          "awayStartPitcher": null,
+          "winPitcher": null,
+          "losePitcher": null
+        }
+      ]
+    }
+  },
+  "validCode": "GOOD",
+  "updatedAt": "2026-08-26T08:31:47.889889841+09:00"
+}
