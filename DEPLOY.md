@@ -29,5 +29,5 @@ DB 접속값(DB_HOST 등)은 `render.yaml`이 자동 연결하고, 앱은 이를
 Render 배포 → 백엔드 URL 확보 → Vercel 배포(그 URL을 API_BASE로) → Vercel URL을 백엔드 CORS에 등록 → 끝.
 
 ## CI/CD 현황
-- **CI**: GitHub Actions(`.github/workflows/ci.yml`) — push/PR마다 backend(gradle) + frontend(lint/build) 검증.
+- **CI**: GitHub Actions(`.github/workflows/ci.yml`) — push/PR마다 backend(gradle build) + frontend(`npm run verify` = type-check·test·lint, build) 검증.
 - **CD**: Vercel/Render의 Git 연동이 push마다 자동배포. 별도 배포 워크플로 불필요.

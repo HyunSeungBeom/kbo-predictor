@@ -14,7 +14,8 @@ KBO 경기 일정과 **가을야구 진출확률·우승확률**, 그리고 **�
   **Java**로 두어 기본기를 드러내고, 이를 호출하는 서비스·엔티티·API는 **Kotlin**으로 작성해
   **Java ↔ Kotlin 상호운용**을 보여준다.
 - **영속성: Spring Data JPA + PostgreSQL**, 스키마는 **Flyway**로 버전 관리.
-- **프론트(예정): Next.js + TypeScript + Recharts** — 별도 레포. 타입은 springdoc-openapi 스펙에서 생성.
+- **프론트: Next.js + TypeScript + TanStack Query + Recharts** — 같은 레포의 `web/`. 도메인 폴더 구조와
+  그 이유는 [web/docs/frontend-conventions.md](web/docs/frontend-conventions.md).
 
 ## 확률 모델
 
@@ -79,11 +80,13 @@ Next.js(App Router) + TypeScript + Tailwind + TanStack Query + Recharts. 백엔�
 cd web
 npm install
 npm run dev      # http://localhost:3000  (백엔드가 :8080 에서 떠 있어야 함)
+npm run verify   # type-check · test · lint (CI 와 같다)
 ```
 - 대시보드: 순위표 · 우승확률 차트(몬테카를로) · 오늘 경기 예측
-- 일정 페이지: 날짜별 경기
+- 일정 페이지: 팀 · 상대팀 · 홈/원정 · 결과 · 기간 조건 검색. 조건은 URL 에 담겨 새로고침·공유해도 유지
 - 내 팀 설정: localStorage, 순위·차트에서 하이라이트
 - API 주소는 `web/.env.local`의 `NEXT_PUBLIC_API_BASE`(기본 `http://localhost:8080`). 백엔드는 `app.cors.allowed-origins`로 오리진 허용.
+- 구조 규약: [web/docs/frontend-conventions.md](web/docs/frontend-conventions.md) · 테스트: [web/docs/testing.md](web/docs/testing.md)
 
 ## 데이터 출처
 
