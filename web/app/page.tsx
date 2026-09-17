@@ -1,6 +1,6 @@
-import PredictWidget from "@/components/PredictWidget";
-import ProbabilityChart from "@/components/ProbabilityChart";
-import StandingsTable from "@/components/StandingsTable";
+import { PredictWidget } from "@/lib/prediction";
+import { ProbabilityChart } from "@/lib/simulation";
+import { StandingsTable } from "@/lib/standings";
 
 export default function Home() {
   return (

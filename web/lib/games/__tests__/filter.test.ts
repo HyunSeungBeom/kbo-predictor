@@ -1,14 +1,15 @@
 import { describe, expect, it } from "vitest";
-import type { Game } from "../api";
 import {
   hasAnyCondition,
   normalize,
   outcomeOf,
   parseGameFilter,
+  recordOf,
   resultFor,
   toQueryString,
   withOutcome,
-} from "../gameFilter";
+  type Game,
+} from "..";
 
 /**
  * 일정 화면의 필터 규칙. 화면은 이 함수들로 URL 을 읽고 쓰므로, 여기가 틀리면
@@ -125,5 +126,27 @@ describe("RES 001: 승패는 고른 팀 기준이다", () => {
 
   it("예정 경기는 결과가 없다", () => {
     expect(resultFor({ ...game, status: "SCHEDULED", homeScore: null, awayScore: null }, "OB")).toBeNull();
+  });
+});
+
+describe("RES 002: 목록에서 고른 팀의 승·패·무를 센다", () => {
+  const g = (id: number, home: string, away: string, hs: number | null, awayScore: number | null): Game =>
+    ({
+      id,
+      gameDate: "2026-08-01",
+      homeTeamId: home,
+      awayTeamId: away,
+      homeScore: hs,
+      awayScore,
+      status: hs == null ? "SCHEDULED" : "FINAL",
+    }) as Game;
+
+  it("홈·원정을 가리지 않고 그 팀 기준으로 센다", () => {
+    const games = [g(1, "OB", "LG", 5, 3), g(2, "LG", "OB", 4, 2), g(3, "HH", "OB", 1, 1), g(4, "OB", "SS", 2, 1)];
+    expect(recordOf(games, "OB")).toEqual({ WIN: 2, LOSS: 1, DRAW: 1 });
+  });
+
+  it("예정 경기와 그 팀이 안 뛴 경기는 세지 않는다", () => {
+    expect(recordOf([g(1, "OB", "LG", null, null), g(2, "SS", "LG", 7, 0)], "OB")).toEqual({ WIN: 0, LOSS: 0, DRAW: 0 });
   });
 });

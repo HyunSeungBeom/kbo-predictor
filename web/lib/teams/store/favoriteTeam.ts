@@ -1,5 +1,7 @@
+"use client";
+
 import { useCallback, useSyncExternalStore } from "react";
-import { isTeamId, type TeamId } from "./teams";
+import { isTeamId, type TeamId } from "../model/teams";
 
 const KEY = "kbo:favoriteTeam";
 const listeners = new Set<() => void>();

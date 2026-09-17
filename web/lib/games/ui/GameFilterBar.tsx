@@ -1,15 +1,8 @@
 "use client";
 
-import {
-  hasAnyCondition,
-  normalize,
-  outcomeOf,
-  withOutcome,
-  type GameFilter,
-  type Outcome,
-  type Venue,
-} from "@/lib/gameFilter";
 import { TEAM_IDS, isTeamId, teamName } from "@/lib/teams";
+import { hasAnyCondition, normalize, outcomeOf, withOutcome, type Outcome } from "../model/filter";
+import type { GameFilter, Venue } from "../model/types";
 
 const OUTCOME_OPTIONS: { value: Outcome; label: string; needsTeam: boolean }[] = [
   { value: "", label: "전체", needsTeam: false },
@@ -40,7 +33,7 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   );
 }
 
-export default function GameFilterBar({
+export function GameFilterBar({
   filter,
   onChange,
 }: {

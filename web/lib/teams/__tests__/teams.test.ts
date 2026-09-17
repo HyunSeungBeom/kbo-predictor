@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { TEAM_IDS, isTeamId, teamColor, teamName } from "../teams";
+import { TEAM_IDS, isTeamId, teamColor, teamName } from "..";
 
 describe("TEAM 001: 외부 문자열을 팀 코드로 좁힌다", () => {
   it("알려진 코드만 통과한다", () => {

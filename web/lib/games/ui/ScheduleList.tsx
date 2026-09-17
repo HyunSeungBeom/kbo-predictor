@@ -1,19 +1,14 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useMemo } from "react";
-import { ApiError, getGames } from "@/lib/api";
-import {
-  parseGameFilter,
-  resultFor,
-  toQueryString,
-  type GameFilter,
-  type GameResult,
-} from "@/lib/gameFilter";
+import { Card } from "@/components/ds";
+import { ApiError } from "@/lib/api";
 import { teamName } from "@/lib/teams";
-import Card from "./Card";
-import GameFilterBar from "./GameFilterBar";
+import { useGameFilter } from "../hooks/useGameFilter";
+import { useGames } from "../hooks/useGames";
+import { recordOf, resultFor } from "../model/result";
+import type { GameResult } from "../model/types";
+import { GameFilterBar } from "./GameFilterBar";
 
 const RESULT_BADGE: Record<GameResult, { label: string; className: string }> = {
   WIN: { label: "승", className: "text-blue-600" },
@@ -21,38 +16,15 @@ const RESULT_BADGE: Record<GameResult, { label: string; className: string }> = {
   DRAW: { label: "무", className: "text-slate-500" },
 };
 
-/**
- * 경기 일정 + 조건 검색. 필터의 원천은 URL 쿼리스트링이다.
- * - 새로고침·뒤로가기·링크 공유에도 같은 검색 결과가 유지된다.
- * - 이후 자연어 검색은 "문장 → 필터 → URL" 로 이 화면을 그대로 재사용한다.
- */
-export default function ScheduleList() {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+/** 경기 일정 + 조건 검색. 필터의 원천은 URL 쿼리스트링이다(`useGameFilter`). */
+export function ScheduleList() {
+  const { filter, setFilter } = useGameFilter();
+  const { data, isLoading, error } = useGames(filter);
 
-  const filter = useMemo(() => parseGameFilter(searchParams), [searchParams]);
-  const qs = toQueryString(filter);
-
-  // 조건을 바꿀 때마다 히스토리가 쌓이지 않도록 push 대신 replace.
-  const setFilter = (next: GameFilter) =>
-    router.replace(`${pathname}${toQueryString(next)}`, { scroll: false });
-
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["games", qs],
-    queryFn: () => getGames(filter),
-  });
-
-  const record = useMemo(() => {
-    if (!data || !filter.team) return null;
-    const team = filter.team;
-    const counts = { WIN: 0, LOSS: 0, DRAW: 0 };
-    for (const g of data) {
-      const r = resultFor(g, team);
-      if (r) counts[r] += 1;
-    }
-    return counts;
-  }, [data, filter.team]);
+  const record = useMemo(
+    () => (data && filter.team ? recordOf(data, filter.team) : null),
+    [data, filter.team],
+  );
 
   return (
     <Card>

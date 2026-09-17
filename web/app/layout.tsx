@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import "./globals.css";
 import Providers from "./providers";
-import TeamPicker from "@/components/TeamPicker";
+import { TeamPicker } from "@/lib/teams";
 
 export const metadata: Metadata = {
   title: "KBO Predictor",

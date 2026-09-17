@@ -1,10 +1,9 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { getPrediction } from "@/lib/api";
+import { Card } from "@/components/ds";
 import { TEAM_IDS, isTeamId, teamName, type TeamId } from "@/lib/teams";
-import Card from "./Card";
+import { usePrediction } from "../hooks/usePrediction";
 
 function ProbBar({ label, pct }: { label: string; pct: number }) {
   return (
@@ -20,15 +19,11 @@ function ProbBar({ label, pct }: { label: string; pct: number }) {
   );
 }
 
-export default function PredictWidget() {
+export function PredictWidget() {
   // useState("OB") 로 두면 상태 타입이 string 으로 넓어져 아무 문자열이나 들어간다.
   const [home, setHome] = useState<TeamId>("OB");
   const [away, setAway] = useState<TeamId>("LG");
-  const { data, error, refetch, isFetching } = useQuery({
-    queryKey: ["predict", home, away],
-    queryFn: () => getPrediction(home, away),
-    enabled: false,
-  });
+  const { data, error, refetch, isFetching } = usePrediction(home, away);
 
   const teamSelect = (value: TeamId, onChange: (v: TeamId) => void) => (
     <select

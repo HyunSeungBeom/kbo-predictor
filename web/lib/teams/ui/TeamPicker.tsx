@@ -1,9 +1,9 @@
 "use client";
 
-import { useFavoriteTeam } from "@/lib/useFavoriteTeam";
-import { TEAM_IDS, isTeamId, teamName } from "@/lib/teams";
+import { TEAM_IDS, isTeamId, teamName } from "../model/teams";
+import { useFavoriteTeam } from "../store/favoriteTeam";
 
-export default function TeamPicker() {
+export function TeamPicker() {
   const { team, setTeam } = useFavoriteTeam();
   return (
     <label className="flex items-center gap-2 text-sm">

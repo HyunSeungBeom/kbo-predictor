@@ -1,14 +1,12 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import { useFavoriteTeam } from "@/lib/useFavoriteTeam";
-import { getStandings } from "@/lib/api";
-import { teamName } from "@/lib/teams";
-import Card from "./Card";
+import { Card } from "@/components/ds";
+import { teamName, useFavoriteTeam } from "@/lib/teams";
+import { useStandings } from "../hooks/useStandings";
 
-export default function StandingsTable() {
+export function StandingsTable() {
   const { team } = useFavoriteTeam();
-  const { data, isLoading, error } = useQuery({ queryKey: ["standings"], queryFn: getStandings });
+  const { data, isLoading, error } = useStandings();
 
   return (
     <Card>

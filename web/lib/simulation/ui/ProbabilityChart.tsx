@@ -1,11 +1,9 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
 import { Bar, BarChart, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { useFavoriteTeam } from "@/lib/useFavoriteTeam";
-import { getSimulation } from "@/lib/api";
-import { teamColor, teamName, type TeamId } from "@/lib/teams";
-import Card from "./Card";
+import { Card } from "@/components/ds";
+import { teamColor, teamName, useFavoriteTeam, type TeamId } from "@/lib/teams";
+import { useSimulation } from "../hooks/useSimulation";
 
 /** 차트에 실제로 들어가는 행 모양. 익명 객체로 두면 dataKey 오타를 잡을 근거가 없다. */
 interface ChampDatum {
@@ -21,12 +19,9 @@ type TooltipValue = number | string | ReadonlyArray<number | string>;
 const formatPercent = (value: TooltipValue | undefined): string =>
   typeof value === "number" ? `${value}%` : "-";
 
-export default function ProbabilityChart() {
+export function ProbabilityChart() {
   const { team } = useFavoriteTeam();
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["simulation"],
-    queryFn: () => getSimulation(10000),
-  });
+  const { data, isLoading, error } = useSimulation();
 
   return (
     <Card>
