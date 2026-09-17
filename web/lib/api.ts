@@ -1,3 +1,4 @@
+import { toQueryString, type GameFilter } from "./gameFilter";
 import type { TeamId } from "./teams";
 
 const BASE = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:8080";
@@ -41,9 +42,32 @@ export interface Prediction {
   awayWinProb: number;
 }
 
+/**
+ * API 실패. 검증 실패(400)면 백엔드 ProblemDetail 의 `errors`(위반 사유 목록)를 담는다.
+ * 사유를 화면에 그대로 보여주고, 나중엔 자연어 검색 재시도에도 쓴다.
+ */
+export class ApiError extends Error {
+  constructor(
+    readonly status: number,
+    readonly errors: string[] = [],
+  ) {
+    super(`API ${status}`);
+  }
+}
+
+const isStringArray = (v: unknown): v is string[] =>
+  Array.isArray(v) && v.every((item) => typeof item === "string");
+
 async function get<T>(path: string): Promise<T> {
   const res = await fetch(`${BASE}${path}`);
-  if (!res.ok) throw new Error(`API ${res.status}: ${path}`);
+  if (!res.ok) {
+    const body: unknown = await res.json().catch(() => null);
+    const errors =
+      body && typeof body === "object" && "errors" in body && isStringArray(body.errors)
+        ? body.errors
+        : [];
+    throw new ApiError(res.status, errors);
+  }
   return (await res.json()) as T;
 }
 
@@ -52,5 +76,7 @@ export const getSimulation = (iterations = 10000) =>
   get<SimulationResult[]>(`/api/simulation?iterations=${iterations}`);
 export const getSchedule = (date?: string) =>
   get<Game[]>(`/api/schedule${date ? `?date=${date}` : ""}`);
+export const getGames = (filter: GameFilter) =>
+  get<Game[]>(`/api/games${toQueryString(filter)}`);
 export const getPrediction = (home: TeamId, away: TeamId) =>
   get<Prediction>(`/api/predict?home=${home}&away=${away}`);
