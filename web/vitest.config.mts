@@ -1,9 +1,10 @@
 import react from "@vitejs/plugin-react";
-import tsconfigPaths from "vite-tsconfig-paths";
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-  plugins: [tsconfigPaths(), react()],
+  plugins: [react()],
+  /* `@/*` 별칭은 tsconfig.json 의 paths 를 그대로 읽는다 — 별칭을 두 곳에 적지 않게 */
+  resolve: { tsconfigPaths: true },
   test: {
     environment: "jsdom",
     /**
