@@ -1,5 +1,7 @@
 # ⚾ KBO Predictor
 
+[![CI/CD](https://github.com/HyunSeungBeom/kbo-predictor/actions/workflows/ci.yml/badge.svg)](https://github.com/HyunSeungBeom/kbo-predictor/actions/workflows/ci.yml)
+
 KBO 경기 일정과 **가을야구 진출확률·우승확률**, 그리고 **오늘 경기 승부 예측**을 제공하는 웹 서비스.
 내 팀(응원팀)을 설정하면 해당 팀 관점으로 하이라이트한다.
 
@@ -46,7 +48,7 @@ docker compose up --build
 - 순위:  `GET http://localhost:8080/api/standings`  (game 결과에서 실시간 집계)
 - 확률:  `GET http://localhost:8080/api/simulation?iterations=10000`  (몬테카를로 진출/우승 확률)
 - 헬스:  `GET http://localhost:8080/actuator/health`
-- 수집(수동): `POST http://localhost:8080/api/admin/ingest?month=2026-07`
+- 수집(수동): `POST http://localhost:8080/api/admin/ingest?month=2026-07` + 헤더 `X-Admin-Token` (`app.admin.token` 과 같은 값)
 
 ### 데이터 수집 (Phase 0)
 
@@ -103,7 +105,7 @@ KBO는 공식 오픈 API가 없어, 일정·결과는 공개 출처(KBO 공식 /
 - [x] **Phase 1** — 순위(승/패/무) 계산 API. `game`(FINAL)에서 실시간 집계(승률·게임차·순위), 단일 진실원천
 - [x] **Phase 2** — 몬테카를로 진출/우승 확률 (계단식 포스트시즌 시뮬, Random 주입 → 테스트 가능). 캐싱은 후속
 - [x] **Phase 3** — Next.js 프론트(`web/`): 순위표·우승확률 차트·경기예측·일정·내 팀 설정
-- [ ] **Phase 4** — 배포(Fly.io/Railway) + 배포 링크
+- [ ] **Phase 4** — 배포: GitHub Actions CI/CD → GHCR · Render(API) · Neon(DB) · Vercel(웹). 파이프라인 완성, 계정 연결 후 배포 링크 ([DEPLOY.md](DEPLOY.md))
 
 ## 기술 스택
 

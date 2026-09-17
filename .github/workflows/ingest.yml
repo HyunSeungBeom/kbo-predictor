@@ -1,0 +1,52 @@
+name: Ingest schedule
+
+# 운영 API 에 경기 일정·결과 수집을 요청한다.
+# 무료 서버는 요청이 없으면 잠들어서 앱 내부의 06:00 스케줄러가 돌지 않는다 — 그래서 밖에서 깨워 부른다.
+
+on:
+  schedule:
+    - cron: '0 21 * * *'   # 매일 06:00 KST (UTC 21:00)
+  workflow_dispatch:
+    inputs:
+      months:
+        description: '수집할 달, 콤마 구분 (예: 2026-03,2026-04). 비우면 어제·오늘이 속한 달'
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ingest
+  cancel-in-progress: false
+
+jobs:
+  ingest:
+    name: Ingest
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: production
+    env:
+      API_URL: ${{ vars.API_URL }}
+      ADMIN_TOKEN: ${{ secrets.ADMIN_TOKEN }}
+      MONTHS: ${{ inputs.months }}
+    steps:
+      - name: Ingest months
+        run: |
+          [ -n "$API_URL" ] && [ -n "$ADMIN_TOKEN" ] || { echo "::error::production 환경에 API_URL·ADMIN_TOKEN 이 없다 — DEPLOY.md 참고"; exit 1; }
+
+          # 기본은 «어제가 속한 달 + 오늘이 속한 달». 1일 새벽에 이번 달만 받으면 지난달 말일 결과가 빠진다.
+          if [ -z "$MONTHS" ]; then
+            MONTHS="$(TZ=Asia/Seoul date -d yesterday +%Y-%m),$(TZ=Asia/Seoul date +%Y-%m)"
+          fi
+
+          for month in $(echo "$MONTHS" | tr ',' '\n' | tr -d ' ' | sort -u); do
+            if ! [[ "$month" =~ ^[0-9]{4}-(0[1-9]|1[0-2])$ ]]; then
+              echo "::error::형식이 틀린 달: '$month' (YYYY-MM)"
+              exit 1
+            fi
+            # 첫 요청은 잠든 서버를 깨우느라 1분 이상 걸릴 수 있다
+            result=$(curl -fsS --retry 5 --retry-delay 20 --retry-all-errors --max-time 150 \
+              -X POST -H "X-Admin-Token: $ADMIN_TOKEN" "$API_URL/api/admin/ingest?month=$month")
+            echo "$month → $result"
+          done

@@ -38,3 +38,6 @@ out/
 
 ### Kotlin ###
 .kotlin
+
+### Vercel CLI (vercel link) ###
+.vercel

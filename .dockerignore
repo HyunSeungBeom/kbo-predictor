@@ -1,0 +1,11 @@
+# 백엔드 이미지에 필요한 것은 gradle 파일과 src/ 뿐이다
+.git
+.github
+.gradle
+.idea
+.kotlin
+build
+web
+*.md
+docker-compose.yml
+render.yaml
