@@ -11,6 +11,9 @@ RUN ./gradlew --no-daemon clean bootJar -x test
 # --- run stage ---
 FROM eclipse-temurin:17-jre
 WORKDIR /app
+# 이 이미지가 어느 커밋인지 — /actuator/info 의 app.commit 으로 노출돼 배포 확인에 쓴다
+ARG APP_COMMIT=local
+ENV APP_COMMIT=${APP_COMMIT}
 COPY --from=build /app/build/libs/*.jar app.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]

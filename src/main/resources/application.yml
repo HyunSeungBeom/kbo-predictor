@@ -27,3 +27,16 @@ management:
     web:
       exposure:
         include: health,info
+  info:
+    env:
+      enabled: true   # info.* 를 /actuator/info 로 노출
+
+# 배포 파이프라인이 "방금 올린 커밋이 실제로 떠 있는가" 를 확인하는 값. 이미지 빌드 때 주입된다.
+info:
+  app:
+    commit: ${APP_COMMIT:local}
+
+app:
+  admin:
+    # 수집 API 토큰. 비어 있으면 수집 API 는 항상 403 이다(IngestController.authorized).
+    token: ${APP_ADMIN_TOKEN:}
