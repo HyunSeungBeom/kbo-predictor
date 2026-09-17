@@ -1,5 +1,6 @@
 "use client";
 
+import { useId } from "react";
 import { TEAM_IDS, isTeamId, teamName } from "@/lib/teams";
 import { hasAnyCondition, normalize, outcomeOf, withOutcome, type Outcome } from "../model/filter";
 import type { GameFilter, Venue } from "../model/types";
@@ -24,12 +25,29 @@ const isOutcome = (v: string): v is Outcome => OUTCOME_OPTIONS.some((o) => o.val
 const fieldClass =
   "rounded-md border border-slate-300 bg-white px-2 py-1 text-sm disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400";
 
+/** 입력 하나에 붙는 이름. `<label>` 로 감싸 이름과 입력을 연결한다 */
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="flex flex-col gap-1 text-xs text-slate-500">
       {label}
       {children}
     </label>
+  );
+}
+
+/**
+ * 버튼 여러 개에 붙는 이름. `<label>` 로 감싸면 안 된다 — label 은 첫 번째 버튼 하나에만 연결돼서
+ * 그 버튼 이름이 "홈/원정 홈 원정" 으로 읽히고, **이름 글자를 누르면 그 버튼이 눌려 선택이 풀린다.**
+ */
+function FieldGroup({ label, children }: { label: string; children: React.ReactNode }) {
+  const id = useId();
+  return (
+    <div className="flex flex-col gap-1 text-xs text-slate-500">
+      <span id={id}>{label}</span>
+      <div role="group" aria-labelledby={id}>
+        {children}
+      </div>
+    </div>
   );
 }
 
@@ -79,7 +97,7 @@ export function GameFilterBar({
         </select>
       </Field>
 
-      <Field label="홈/원정">
+      <FieldGroup label="홈/원정">
         <div className="flex overflow-hidden rounded-md border border-slate-300 text-sm">
           {VENUE_OPTIONS.map((o) => (
             <button
@@ -98,7 +116,7 @@ export function GameFilterBar({
             </button>
           ))}
         </div>
-      </Field>
+      </FieldGroup>
 
       <Field label="결과">
         <select
