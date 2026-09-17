@@ -1,7 +1,12 @@
+import type { TeamId } from "./teams";
+
 const BASE = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:8080";
 
+// 팀 코드는 우리 백엔드(team 테이블)에서만 오므로 TeamId 로 좁혀 쓴다.
+// 표시 헬퍼(teamName/teamColor)는 여전히 string 을 받아 모르는 코드도 안전하게 처리한다.
+
 export interface TeamStanding {
-  teamId: string;
+  teamId: TeamId;
   name: string;
   games: number;
   wins: number;
@@ -13,7 +18,7 @@ export interface TeamStanding {
 }
 
 export interface SimulationResult {
-  teamId: string;
+  teamId: TeamId;
   name: string;
   playoffProb: number;
   championshipProb: number;
@@ -22,16 +27,16 @@ export interface SimulationResult {
 export interface Game {
   id: number;
   gameDate: string;
-  homeTeamId: string;
-  awayTeamId: string;
+  homeTeamId: TeamId;
+  awayTeamId: TeamId;
   homeScore: number | null;
   awayScore: number | null;
   status: "SCHEDULED" | "FINAL";
 }
 
 export interface Prediction {
-  home: string;
-  away: string;
+  home: TeamId;
+  away: TeamId;
   homeWinProb: number;
   awayWinProb: number;
 }
@@ -47,5 +52,5 @@ export const getSimulation = (iterations = 10000) =>
   get<SimulationResult[]>(`/api/simulation?iterations=${iterations}`);
 export const getSchedule = (date?: string) =>
   get<Game[]>(`/api/schedule${date ? `?date=${date}` : ""}`);
-export const getPrediction = (home: string, away: string) =>
+export const getPrediction = (home: TeamId, away: TeamId) =>
   get<Prediction>(`/api/predict?home=${home}&away=${away}`);

@@ -1,7 +1,7 @@
 "use client";
 
 import { useFavoriteTeam } from "@/lib/useFavoriteTeam";
-import { TEAM_IDS, teamName } from "@/lib/teams";
+import { TEAM_IDS, isTeamId, teamName } from "@/lib/teams";
 
 export default function TeamPicker() {
   const { team, setTeam } = useFavoriteTeam();
@@ -10,7 +10,8 @@ export default function TeamPicker() {
       <span className="text-slate-500">내 팀</span>
       <select
         value={team ?? ""}
-        onChange={(e) => setTeam(e.target.value || null)}
+        // select 의 value 는 string 이라 TeamId 로 좁혀서 넘긴다("선택 안 함" = "" → null)
+        onChange={(e) => setTeam(isTeamId(e.target.value) ? e.target.value : null)}
         className="rounded-md border border-slate-300 bg-white px-2 py-1"
       >
         <option value="">선택 안 함</option>
