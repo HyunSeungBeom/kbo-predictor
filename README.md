@@ -38,6 +38,9 @@ docker compose up --build
 ```
 
 - 일정:  `GET http://localhost:8080/api/schedule`  (특정일: `?date=2026-07-20`)
+- 검색:  `GET http://localhost:8080/api/games?team=OB&opponent=LG&venue=HOME&result=WIN&from=2026-08-01&to=2026-08-31`
+  (모든 파라미터 선택·AND 결합. `opponent`/`venue`/`result`는 `team` 관점이라 `team`과 함께만 쓸 수 있고,
+  말이 안 되는 조합은 400 + `errors` 목록으로 거부 — 이후 자연어 검색에서 LLM이 만든 조건을 같은 규칙으로 검증한다)
 - 예측:  `GET http://localhost:8080/api/predict?home=OB&away=LG`
 - 순위:  `GET http://localhost:8080/api/standings`  (game 결과에서 실시간 집계)
 - 확률:  `GET http://localhost:8080/api/simulation?iterations=10000`  (몬테카를로 진출/우승 확률)
