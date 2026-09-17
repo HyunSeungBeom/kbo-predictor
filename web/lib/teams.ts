@@ -31,9 +31,12 @@ export type TeamId = keyof typeof TEAMS;
 /** Object.keys 는 항상 string[] 을 주므로 여기서만 단언한다(키 출처가 TEAMS 하나뿐이라 안전). */
 export const TEAM_IDS = Object.keys(TEAMS) as TeamId[];
 
-/** 런타임 문자열 → TeamId 좁히기. localStorage·select value 처럼 외부에서 온 값에 쓴다. */
+/**
+ * 런타임 문자열 → TeamId 좁히기. localStorage·select value·URL 처럼 외부에서 온 값에 쓴다.
+ * `in` 이 아니라 자기 속성만 본다 — `in` 은 프로토타입까지 봐서 "toString" 도 팀으로 통과시킨다.
+ */
 export const isTeamId = (id: string | null | undefined): id is TeamId =>
-  id != null && id in TEAMS;
+  id != null && Object.hasOwn(TEAMS, id);
 
 const FALLBACK_COLOR = "#64748b";
 
