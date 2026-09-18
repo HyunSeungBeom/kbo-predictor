@@ -194,11 +194,21 @@ jobs:
       - name: Build
         run: npx --yes "$VERCEL_CLI" build --prod --token="$VERCEL_TOKEN"
         env:
-          NEXT_PUBLIC_API_BASE: ${{ vars.API_URL }}
+          # 브라우저는 같은 사이트(/api/*)로 부르고, 이 값은 그 요청을 넘길 실제 API 서버다
+          API_PROXY_ORIGIN: ${{ vars.API_URL }}
+          NEXT_PUBLIC_API_BASE: ""
 
-      # 빌드 결과에 운영 API 주소가 실제로 들어갔는지 — 빠지면 localhost:8080 을 부르는 사이트가 배포된다
-      - name: Check API URL is baked in
-        run: grep -rqF "$API_URL" .vercel/output/static/_next || { echo "::error::번들에 $API_URL 이 없다"; exit 1; }
+      # 프론트는 API 를 **같은 사이트**(/api/*)로 부르고 Next 프록시가 실제 서버로 넘긴다.
+      # 번들에 외부 API 주소가 박혀 있으면 프록시를 건너뛴 것이고, 그러면 세션 쿠키가 제3자
+      # 쿠키가 되어 사파리·아이폰에서 로그인이 안 된다.
+      - name: Check requests go through the same-site proxy
+        run: |
+          if grep -rqF "$API_URL" .vercel/output/static/_next; then
+            echo "::error::번들에 외부 API 주소가 박혀 있다 — NEXT_PUBLIC_API_BASE 를 비우고 프록시를 쓰게 한다"
+            exit 1
+          fi
+          grep -q "$API_URL" .vercel/output/config.json || {
+            echo "::error::프록시 설정이 빌드에 없다 — API_PROXY_ORIGIN 을 확인한다"; exit 1; }
 
       - name: Deploy
         run: npx --yes "$VERCEL_CLI" deploy --prebuilt --prod --scope "$VERCEL_SCOPE" --token="$VERCEL_TOKEN"

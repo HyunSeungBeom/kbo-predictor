@@ -5,7 +5,11 @@
  * 주소 조립과 실패 해석이 한 곳에 있어야 고칠 때도 한 곳만 고친다.
  */
 
-export const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:8080";
+/**
+ * API 주소. 기본은 **빈 문자열 = 같은 사이트**다 — `next.config.ts` 의 프록시가 `/api/*` 를
+ * 실제 API 서버로 넘긴다. 세션 쿠키가 1차 쿠키로 취급되려면 같은 사이트여야 한다.
+ */
+export const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "";
 
 /**
  * API 실패. 검증 실패(400)면 백엔드 ProblemDetail 의 `errors`(위반 사유 목록)를 담는다.
@@ -23,8 +27,11 @@ export class ApiError extends Error {
 const isStringArray = (v: unknown): v is string[] =>
   Array.isArray(v) && v.every((item) => typeof item === "string");
 
-export async function get<T>(path: string): Promise<T> {
-  const res = await fetch(`${API_BASE}${path}`);
+export /** 모든 요청에 세션 쿠키를 함께 보낸다 — 로그인 상태가 유지되는 유일한 통로다. */
+const withCookies: RequestInit = { credentials: "include" };
+
+async function request<T>(path: string, init?: RequestInit): Promise<T> {
+  const res = await fetch(`${API_BASE}${path}`, { ...withCookies, ...init });
   if (!res.ok) {
     const body: unknown = await res.json().catch(() => null);
     const errors =
@@ -33,5 +40,20 @@ export async function get<T>(path: string): Promise<T> {
         : [];
     throw new ApiError(res.status, errors);
   }
-  return (await res.json()) as T;
+  /* 204 No Content (로그아웃·삭제) 는 본문이 없다 */
+  return (res.status === 204 ? undefined : await res.json()) as T;
 }
+
+export const get = <T>(path: string) => request<T>(path);
+
+export const post = <T>(path: string, body?: unknown) =>
+  request<T>(path, {
+    method: "POST",
+    headers: body === undefined ? undefined : { "Content-Type": "application/json" },
+    body: body === undefined ? undefined : JSON.stringify(body),
+  });
+
+export const put = <T>(path: string, body: unknown) =>
+  request<T>(path, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+
+export const del = <T>(path: string) => request<T>(path, { method: "DELETE" });

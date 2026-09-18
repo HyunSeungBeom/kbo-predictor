@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import Link from "next/link";
 import "./globals.css";
 import Providers from "./providers";
 import { SITE } from "@/lib/site";
+import { LoginButton } from "@/lib/auth";
 import { TeamPicker } from "@/lib/teams";
 
 export const metadata: Metadata = {
@@ -38,8 +40,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <Link href="/schedule" className="text-sm text-slate-600 hover:text-slate-900">
                   일정
                 </Link>
+                <Link href="/board" className="text-sm text-slate-600 hover:text-slate-900">
+                  게시판
+                </Link>
               </nav>
-              <TeamPicker />
+              <span className="flex items-center gap-3">
+                <TeamPicker />
+                <Suspense fallback={null}>
+                  <LoginButton />
+                </Suspense>
+              </span>
             </div>
           </header>
           <main className="mx-auto max-w-5xl px-4 py-6">{children}</main>

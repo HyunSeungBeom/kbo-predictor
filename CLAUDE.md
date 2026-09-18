@@ -49,6 +49,22 @@ cd web && npm run verify                # type-check · test · lint
 - ⚠️ **`live` 프로필 없이 수집을 부르면 샘플 출처가 실제 결과를 가짜 점수로 덮어쓴다**(upsert 라 에러 없음).
   실DB 에 붙은 앱은 반드시 `live` 로 띄운다. 운영은 `/actuator/info` 의 `ingestSource` 를 배포 파이프라인이 확인한다
 
+## 로그인 · 게시판 규칙
+
+- **소셜 로그인만 쓴다(지금은 카카오).** 비밀번호를 보관하지 않으므로 해싱·재설정·유출 대응이
+  통째로 없다. 받는 정보도 **닉네임·프로필 이미지뿐** — 이메일·전화번호는 요청하지 않는다
+- **토큰은 서버 밖으로 안 나간다.** 인가 코드 교환·프로필 조회를 서버가 하고 브라우저에는
+  **HttpOnly 쿠키**만 준다. 프론트 코드에 토큰이 없으니 XSS 로도 세션을 못 훔친다
+- 세션은 **서버가 들고 있고 DB 에는 해시만** 저장한다(JWT 아님) — 로그아웃·차단이 즉시 먹고,
+  DB 가 새도 그 값으로 로그인할 수 없다
+- **프론트와 API 는 같은 사이트여야 한다.** `web/next.config.ts` 가 `/api/*` 를 API 서버로
+  프록시한다. 안 그러면 세션 쿠키가 제3자 쿠키가 되어 사파리·아이폰에서 로그인이 끊긴다
+- 게시판은 **읽기 누구나 · 쓰기·수정·삭제는 글쓴이 본인만**(`PostRules.canModify`). 화면의 `mine`
+  은 버튼 노출용일 뿐 권한 판정이 아니다 — 판정은 서버가 쿠키로 한다
+- 글은 **평문만** 저장하고 평문으로 그린다(HTML·마크다운 없음) — 태그를 허용하면 XSS 를 막을
+  책임이 생기는데 응원 글에 그만한 값이 없다
+- 지운 글은 `deleted_at` 으로 남긴다(신고·분쟁 확인, 실수 복구). 조회는 전부 이 조건을 건다
+
 ## 프론트 ↔ 백엔드 계약
 
 한 레포에 있으니 어긋나면 테스트가 잡게 해 두었다.
@@ -58,6 +74,7 @@ cd web && npm run verify                # type-check · test · lint
 | 팀 코드·이름 | `V1__init.sql` 시드 | `web/lib/teams/model/teams.ts` | `web/tests/team-codes.test.ts` (TEAM 003) |
 | 경기 검색 조건 | `GameFilter.kt` (validate) | `web/lib/games/model/` (normalize) | 양쪽 각자 테스트 — 규칙을 바꾸면 **둘 다** 고친다 |
 | 검증 실패 응답 | `ProblemDetail` + `errors: string[]` | `ApiError.errors` | `web/lib/api/__tests__/client.test.ts` (API 002) |
+| 글 입력 규칙 | `PostRules`(길이·공백) | `web/lib/board/model/postSchema.ts`(zod) | 양쪽 각자 테스트 — **한쪽만 고치면 사용자가 헷갈린다** |
 
 ## 배포
 

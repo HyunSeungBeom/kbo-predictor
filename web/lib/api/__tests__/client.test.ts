@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { API_BASE, ApiError, get } from "..";
+import { API_BASE, ApiError, get, post } from "..";
 import { respondWith } from "@/tests/fetch-stub";
 
 /**
@@ -15,7 +15,19 @@ describe("API 001: 성공하면 본문을 돌려준다", () => {
     vi.stubGlobal("fetch", fetch);
 
     await expect(get("/api/standings")).resolves.toEqual([{ id: 1 }]);
-    expect(fetch).toHaveBeenCalledWith(`${API_BASE}/api/standings`);
+    expect(fetch).toHaveBeenCalledWith(
+      `${API_BASE}/api/standings`,
+      /* 세션 쿠키를 함께 보내야 로그인 상태가 유지된다 */
+      expect.objectContaining({ credentials: "include" }),
+    );
+  });
+});
+
+describe("API 001-2: 본문 없는 응답(204)도 처리한다", () => {
+  it("로그아웃·삭제는 204 라 JSON 파싱을 시도하면 안 된다", async () => {
+    vi.stubGlobal("fetch", vi.fn(async () => new Response(null, { status: 204 })));
+
+    await expect(post("/api/auth/logout")).resolves.toBeUndefined();
   });
 });
 

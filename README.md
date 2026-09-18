@@ -89,6 +89,7 @@ npm run verify   # type-check · test · lint (CI 와 같다)
 ```
 - 대시보드: 순위표 · 우승확률 차트(몬테카를로) · 오늘 경기 예측
 - 일정 페이지: 팀 · 상대팀 · 홈/원정 · 결과 · 기간 조건 검색. 조건은 URL 에 담겨 새로고침·공유해도 유지
+- 팬 게시판(팀별 10개): 읽기는 누구나, 글쓰기·수정·삭제는 카카오 로그인한 본인만
 - 내 팀 설정: localStorage, 순위·차트에서 하이라이트
 - API 주소는 `web/.env.local`의 `NEXT_PUBLIC_API_BASE`(기본 `http://localhost:8080`). 백엔드는 `app.cors.allowed-origins`로 오리진 허용.
 - 구조 규약: [web/docs/frontend-conventions.md](web/docs/frontend-conventions.md) · 테스트: [web/docs/testing.md](web/docs/testing.md)
