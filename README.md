@@ -5,7 +5,9 @@
 KBO 경기 일정과 **가을야구 진출확률·우승확률**, 그리고 **오늘 경기 승부 예측**을 제공하는 웹 서비스.
 내 팀(응원팀)을 설정하면 해당 팀 관점으로 하이라이트한다.
 
-> 🔗 **배포 링크: (배포 후 여기에)**  —  포트폴리오이므로 배포 링크가 최우선.
+> 🔗 **웹: https://kbo-predictor-three.vercel.app** · **API: https://kbo-predictor-api.onrender.com/actuator/health**
+>
+> 무료 인스턴스라 15분간 요청이 없으면 잠든다 — **첫 접속은 서버가 깨어나는 1분가량이 걸린다.**
 
 ---
 
@@ -105,7 +107,7 @@ KBO는 공식 오픈 API가 없어, 일정·결과는 공개 출처(KBO 공식 /
 - [x] **Phase 1** — 순위(승/패/무) 계산 API. `game`(FINAL)에서 실시간 집계(승률·게임차·순위), 단일 진실원천
 - [x] **Phase 2** — 몬테카를로 진출/우승 확률 (계단식 포스트시즌 시뮬, Random 주입 → 테스트 가능). 캐싱은 후속
 - [x] **Phase 3** — Next.js 프론트(`web/`): 순위표·우승확률 차트·경기예측·일정·내 팀 설정
-- [ ] **Phase 4** — 배포: GitHub Actions CI/CD → GHCR · Render(API) · Neon(DB) · Vercel(웹). 파이프라인 완성, 계정 연결 후 배포 링크 ([DEPLOY.md](DEPLOY.md))
+- [x] **Phase 4** — 배포: GitHub Actions CI/CD → GHCR · Render(API) · Neon(DB, 싱가포르) · Vercel(웹). main push 시 검증 통과분만 자동 배포하고, 매일 06:00 KST 수집 ([DEPLOY.md](DEPLOY.md))
 
 ## 기술 스택
 
