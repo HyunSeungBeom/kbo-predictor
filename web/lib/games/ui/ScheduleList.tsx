@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { Card } from "@/components/ds";
 import { ApiError } from "@/lib/api";
-import { teamName } from "@/lib/teams";
+import { TeamLogo, teamName } from "@/lib/teams";
 import { useGameFilter } from "../hooks/useGameFilter";
 import { useGames } from "../hooks/useGames";
 import { recordOf, resultFor } from "../model/result";
@@ -80,14 +80,22 @@ export function ScheduleList() {
               <li key={g.id} className="flex items-center gap-2 py-2 text-sm">
                 <span className="w-24 text-slate-500 tabular-nums">{g.gameDate}</span>
                 <span
-                  className={`flex-1 text-right ${g.homeTeamId === filter.team ? "font-semibold" : ""}`}
+                  className={`flex flex-1 items-center justify-end gap-1.5 ${
+                    g.homeTeamId === filter.team ? "font-semibold" : ""
+                  }`}
                 >
+                  <TeamLogo teamId={g.homeTeamId} size={18} />
                   {teamName(g.homeTeamId)}
                 </span>
                 <span className="w-16 text-center font-medium tabular-nums">
                   {g.status === "FINAL" ? `${g.homeScore} : ${g.awayScore}` : "vs"}
                 </span>
-                <span className={`flex-1 ${g.awayTeamId === filter.team ? "font-semibold" : ""}`}>
+                <span
+                  className={`flex flex-1 items-center gap-1.5 ${
+                    g.awayTeamId === filter.team ? "font-semibold" : ""
+                  }`}
+                >
+                  <TeamLogo teamId={g.awayTeamId} size={18} />
                   {teamName(g.awayTeamId)}
                 </span>
                 <span className={`w-12 text-right text-xs font-medium ${badge.className}`}>

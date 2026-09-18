@@ -1,6 +1,6 @@
 "use client";
 
-import { teamName } from "@/lib/teams";
+import { TeamLogo, teamName } from "@/lib/teams";
 import {
   isSmallSample,
   percent,
@@ -27,7 +27,14 @@ function Side({
   const vs = vsOpponentSummary(starter.vsOpponent, teamName(opponentId));
   return (
     <div className={`min-w-0 flex-1 ${align === "right" ? "text-right" : ""}`}>
-      <p className="text-sm font-semibold break-keep">{teamName(teamId)}</p>
+      <p
+        className={`flex items-center gap-1.5 text-sm font-semibold break-keep ${
+          align === "right" ? "justify-end" : ""
+        }`}
+      >
+        <TeamLogo teamId={teamId} size={20} />
+        {teamName(teamId)}
+      </p>
       <p className="text-xl font-bold tabular-nums sm:text-2xl">{percent(prob)}</p>
       <p className="mt-1 text-sm">{starter.name ?? "선발 미발표"}</p>
       <p className="text-xs break-keep text-slate-500">

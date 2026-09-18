@@ -64,7 +64,9 @@ tests/                      특정 도메인에 속하지 않는 것만
 | `SUM` | 선발 기록 표시 문구(표본 수 · 첫 선발 · 상대전적) | `lib/prediction/__tests__/summary.test.ts` |
 | `TDY` | 오늘 경기 보드 | `lib/prediction/__tests__/TodayBoard.test.tsx` |
 | `SCH` | 일정 목록 화면 | `lib/games/__tests__/ScheduleList.test.tsx` |
-| `TEAM` | 팀 코드 좁히기 · 표시 · 백엔드 시드 계약 | `lib/teams/__tests__/teams.test.ts` · `tests/team-codes.test.ts` |
+| `TEAM` | 팀 코드 좁히기 · 표시 · 로고 주소 · 백엔드 시드 계약 | `lib/teams/__tests__/teams.test.ts` · `tests/team-codes.test.ts` |
+| `TLG` | 구단 로고(실패 시 배지 대체 · 접근성) | `lib/teams/__tests__/TeamLogo.test.tsx` |
+| `SITE` | 사이트 메타 · 링크 미리보기 값 | `lib/site/__tests__/site.test.ts` |
 | `API` | HTTP 코어 성공 · 실패 해석 | `lib/api/__tests__/client.test.ts` |
 | `ARCH` | 구조 규칙 | `tests/conventions.test.ts` |
 | `DET` | 규칙 판정 함수 | `tests/conventions.detect.test.ts` |

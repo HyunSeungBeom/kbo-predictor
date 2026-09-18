@@ -46,3 +46,15 @@ const FALLBACK_COLOR = "#64748b";
  */
 export const teamName = (id: string): string => (isTeamId(id) ? TEAMS[id].name : id);
 export const teamColor = (id: string): string => (isTeamId(id) ? TEAMS[id].color : FALLBACK_COLOR);
+
+/**
+ * 구단 로고. 일정을 받아오는 곳(다음 스포츠)이 경기마다 같은 규칙의 주소를 함께 내려준다 —
+ * 파일명이 우리 팀 코드와 같아서 코드로 조립할 수 있다.
+ *
+ * 이미지를 레포에 담지 않고 원본을 그대로 참조한다(구단 로고는 각 구단의 상표다).
+ * 주소가 바뀌거나 막히면 [TeamLogo] 가 팀 색 배지로 대체한다.
+ */
+const LOGO_BASE = "https://t1.daumcdn.net/media/img-section/sports13/logo/team/1";
+
+export const teamLogoUrl = (id: string): string | null =>
+  isTeamId(id) ? `${LOGO_BASE}/${id}_300300.png` : null;

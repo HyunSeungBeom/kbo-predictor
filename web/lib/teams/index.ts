@@ -7,4 +7,5 @@
 
 export * from "./model/teams";
 export * from "./store/favoriteTeam";
+export * from "./ui/TeamLogo";
 export * from "./ui/TeamPicker";

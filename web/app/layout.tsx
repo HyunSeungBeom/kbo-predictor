@@ -2,11 +2,23 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import "./globals.css";
 import Providers from "./providers";
+import { SITE } from "@/lib/site";
 import { TeamPicker } from "@/lib/teams";
 
 export const metadata: Metadata = {
-  title: "KBO Predictor",
-  description: "KBO 순위 · 가을야구 진출/우승 확률 · 경기 예측",
+  /* 링크 미리보기 이미지는 절대 주소여야 해서 기준 주소를 알려준다 */
+  metadataBase: new URL(SITE.url),
+  title: { default: SITE.title, template: `%s · ${SITE.name}` },
+  description: SITE.description,
+  openGraph: {
+    type: "website",
+    siteName: SITE.name,
+    title: SITE.title,
+    description: SITE.description,
+    url: SITE.url,
+    locale: SITE.locale,
+  },
+  twitter: { card: "summary_large_image", title: SITE.title, description: SITE.description },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

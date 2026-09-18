@@ -1,7 +1,7 @@
 "use client";
 
 import { Card } from "@/components/ds";
-import { teamName, useFavoriteTeam } from "@/lib/teams";
+import { TeamLogo, teamName, useFavoriteTeam } from "@/lib/teams";
 import { useStandings } from "../hooks/useStandings";
 
 export function StandingsTable() {
@@ -38,7 +38,12 @@ export function StandingsTable() {
                   }`}
                 >
                   <td className="py-1.5 pr-2 tabular-nums">{r.rank}</td>
-                  <td>{teamName(r.teamId)}</td>
+                  <td>
+                    <span className="flex items-center gap-2">
+                      <TeamLogo teamId={r.teamId} size={20} />
+                      {teamName(r.teamId)}
+                    </span>
+                  </td>
                   <td className="px-2 text-right tabular-nums">{r.wins}</td>
                   <td className="px-2 text-right tabular-nums">{r.losses}</td>
                   <td className="px-2 text-right tabular-nums">{r.draws}</td>
