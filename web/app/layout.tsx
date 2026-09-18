@@ -15,8 +15,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-screen bg-slate-50 text-slate-900 antialiased">
         <Providers>
           <header className="border-b border-slate-200 bg-white">
-            <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3">
-              <nav className="flex items-center gap-5">
+            <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-y-2 gap-x-4 px-4 py-3">
+              <nav className="flex flex-wrap items-center gap-x-5 gap-y-1">
                 <Link href="/" className="text-lg font-bold">
                   ⚾ KBO Predictor
                 </Link>

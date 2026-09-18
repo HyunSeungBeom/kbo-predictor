@@ -61,6 +61,8 @@ tests/                      특정 도메인에 속하지 않는 것만
 | `RES` | 팀 기준 승패 · 합계 | 〃 |
 | `GAPI` | 경기 API 주소 조립 | `lib/games/__tests__/gamesApi.test.ts` |
 | `GFB` | 필터 바 컴포넌트 | `lib/games/__tests__/GameFilterBar.test.tsx` |
+| `SUM` | 선발 기록 표시 문구(표본 수 · 첫 선발 · 상대전적) | `lib/prediction/__tests__/summary.test.ts` |
+| `TDY` | 오늘 경기 보드 | `lib/prediction/__tests__/TodayBoard.test.tsx` |
 | `SCH` | 일정 목록 화면 | `lib/games/__tests__/ScheduleList.test.tsx` |
 | `TEAM` | 팀 코드 좁히기 · 표시 · 백엔드 시드 계약 | `lib/teams/__tests__/teams.test.ts` · `tests/team-codes.test.ts` |
 | `API` | HTTP 코어 성공 · 실패 해석 | `lib/api/__tests__/client.test.ts` |
