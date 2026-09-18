@@ -41,6 +41,10 @@ cd web && npm run verify                # type-check · test · lint
 - 수집 출처는 `KboScheduleSource` 로 추상화 — `SeedKboScheduleSource`(기본) / `DaumKboScheduleSource`(`live`
   프로필, 문서 없는 비공식 JSON). 매일 06:00 KST 스케줄러가 이번 달을 upsert 한다
 - 검색 조건이 말이 안 되면 **조용히 무시하지 않고 400 + `errors` 목록**으로 거부한다(`GameFilter.validate`)
+- **선발 투수는 «팀 평균 대비 보정» 으로만 반영한다**(`StarterRatings`). 등판 수가 적을수록 팀 평균으로
+  수축시키고, 등판 0(첫 선발)이면 보정 0 = 팀 승률만 쓴 예측과 같다. 상대전적은 표본이 1~3등판이라
+  **표시만** 하고 계산에 넣지 않는다
+- upsert 키는 **출처 경기 id**(`external_id`)다. (날짜+홈+원정)은 더블헤더에서 두 경기가 한 건으로 덮어써진다
 - 수집 API 는 `X-Admin-Token` 이 `app.admin.token` 과 같아야 한다. **토큰 설정이 비면 항상 403** — 설정을 빠뜨려도 열리지 않게
 - ⚠️ **`live` 프로필 없이 수집을 부르면 샘플 출처가 실제 결과를 가짜 점수로 덮어쓴다**(upsert 라 에러 없음).
   실DB 에 붙은 앱은 반드시 `live` 로 띄운다. 운영은 `/actuator/info` 의 `ingestSource` 를 배포 파이프라인이 확인한다

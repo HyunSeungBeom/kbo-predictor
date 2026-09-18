@@ -14,4 +14,18 @@ object Predictions {
     /** 승률만으로 홈팀 승리확률을 계산. */
     fun homeWinProbability(homeWinPct: Double, awayWinPct: Double): Double =
         Log5.winProbabilityWithHomeEdge(homeWinPct, awayWinPct, HOME_EDGE)
+
+    /**
+     * 선발 보정을 반영한 홈팀 승리확률. 보정치는 [StarterRatings] 가 «팀 평균 대비» 로 낸다 —
+     * 등판 이력이 없는 투수면 0 이라 위 함수와 결과가 같다.
+     */
+    fun homeWinProbability(
+        homeWinPct: Double,
+        awayWinPct: Double,
+        homeStarterAdjustment: Double,
+        awayStarterAdjustment: Double,
+    ): Double = homeWinProbability(
+        StarterRatings.effectiveWinPct(homeWinPct, homeStarterAdjustment),
+        StarterRatings.effectiveWinPct(awayWinPct, awayStarterAdjustment),
+    )
 }

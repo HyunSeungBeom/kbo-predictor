@@ -31,4 +31,15 @@ class Game(
 
     @Enumerated(EnumType.STRING)
     var status: GameStatus = GameStatus.SCHEDULED,
+
+    /** 선발 투수. 예정 경기는 발표 전이라 null 일 수 있고, 경기 당일 바뀌기도 한다. */
+    var homeStartPitcher: String? = null,
+    var awayStartPitcher: String? = null,
+
+    /** "18:30" — 오늘 경기 카드에 표시. */
+    var startTime: String? = null,
+    var stadium: String? = null,
+
+    /** 출처 경기 id. upsert 키 — 더블헤더를 서로 다른 경기로 구분한다. */
+    var externalId: String? = null,
 )

@@ -25,7 +25,7 @@ KBO 경기 일정과 **가을야구 진출확률·우승확률**, 그리고 **�
 
 | 예측 | 방법 | 상태 |
 |------|------|------|
-| 오늘 경기 승리확률 | **log5** (승률 기반) + 홈 어드밴티지 | ✅ 구현 |
+| 오늘 경기 승리확률 | **log5**(승률) + 홈 어드밴티지 + **선발 투수 보정**(등판 수에 따라 팀 평균으로 수축) | ✅ 구현 |
 | 가을야구 진출확률 / 우승확률 | **몬테카를로 시뮬레이션** (잔여 일정 N회 가상 플레이 + 계단식 포스트시즌) | ✅ 구현 |
 | 승률 대신 Elo·선발투수 반영 | 레이팅 시스템 | 🔮 v2 |
 
@@ -46,7 +46,8 @@ docker compose up --build
 - 검색:  `GET http://localhost:8080/api/games?team=OB&opponent=LG&venue=HOME&result=WIN&from=2026-08-01&to=2026-08-31`
   (모든 파라미터 선택·AND 결합. `opponent`/`venue`/`result`는 `team` 관점이라 `team`과 함께만 쓸 수 있고,
   말이 안 되는 조합은 400 + `errors` 목록으로 거부 — 이후 자연어 검색에서 LLM이 만든 조건을 같은 규칙으로 검증한다)
-- 예측:  `GET http://localhost:8080/api/predict?home=OB&away=LG`
+- 오늘 경기: `GET http://localhost:8080/api/predict/today` (날짜 지정: `?date=2026-09-18`) — 그날 경기 + 선발 반영 예측
+- 예측:  `GET http://localhost:8080/api/predict?home=OB&away=LG` (선발 미지정 매치업)
 - 순위:  `GET http://localhost:8080/api/standings`  (game 결과에서 실시간 집계)
 - 확률:  `GET http://localhost:8080/api/simulation?iterations=10000`  (몬테카를로 진출/우승 확률)
 - 헬스:  `GET http://localhost:8080/actuator/health`

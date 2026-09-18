@@ -14,4 +14,10 @@ data class ScrapedGame(
     val homeScore: Int? = null,
     val awayScore: Int? = null,
     val status: GameStatus = GameStatus.SCHEDULED,
+    val homeStartPitcher: String? = null,
+    val awayStartPitcher: String? = null,
+    val startTime: String? = null,
+    val stadium: String? = null,
+    /** 출처 경기 id — upsert 키. 없으면 (날짜+홈+원정) 으로 매칭한다. */
+    val externalId: String? = null,
 )

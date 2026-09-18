@@ -1,6 +1,7 @@
 package com.seungbeom.kbo.game
 
 import com.seungbeom.kbo.prediction.PredictionService
+import com.seungbeom.kbo.prediction.TodayGame
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.http.HttpStatus
 import org.springframework.http.ProblemDetail
@@ -52,7 +53,19 @@ class GameController(
             setProperty("errors", e.errors)
         }
 
-    /** 오늘 경기 승부 예측: /api/predict?home=OB&away=LG */
+    /**
+     * 그날 열리는 경기 + 선발 반영 예측. `/api/predict/today?date=2026-09-18`
+     * date 를 생략하면 **KST 오늘**.
+     */
+    @GetMapping("/predict/today")
+    fun today(
+        @RequestParam(required = false)
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+        date: LocalDate?,
+    ): List<TodayGame> =
+        if (date != null) predictionService.gamesOn(date) else predictionService.gamesOn()
+
+    /** 두 팀 매치업 예측(선발 미지정): /api/predict?home=OB&away=LG */
     @GetMapping("/predict")
     fun predict(
         @RequestParam home: String,

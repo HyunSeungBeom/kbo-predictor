@@ -127,8 +127,19 @@ class DaumKboScheduleSource(
                 homeScore = if (finished) n.path("homeResult").asString(null)?.toIntOrNull() else null,
                 awayScore = if (finished) n.path("awayResult").asString(null)?.toIntOrNull() else null,
                 status = if (finished) GameStatus.FINAL else GameStatus.SCHEDULED,
+                // 선발은 경기 당일에 확정·변경된다. 발표 전이면 필드가 없거나 빈 문자열이다.
+                homeStartPitcher = n.path("homeStartPitcher").asString(null)?.ifBlank { null },
+                awayStartPitcher = n.path("awayStartPitcher").asString(null)?.ifBlank { null },
+                // "1830" → "18:30". 형식이 다르면 버린다(화면 표시용이라 없어도 무방).
+                startTime = n.path("startTime").asString(null)?.let(::formatTime),
+                stadium = n.path("fieldName").asString(null)?.ifBlank { null },
+                externalId = n.path("gameId").asString(null)?.ifBlank { null },
             )
         }
+
+        /** "1830" → "18:30". 네 자리 숫자가 아니면 null. */
+        fun formatTime(raw: String): String? =
+            if (raw.length == 4 && raw.all(Char::isDigit)) "${raw.take(2)}:${raw.drop(2)}" else null
 
         private fun teamCode(n: JsonNode, side: String): String? {
             val id = n.path("${side}TeamId").asLong(0L)

@@ -82,4 +82,24 @@ class DaumKboScheduleSourceTest {
         // 2월 말일(28/29)이 하드코딩되지 않았는지 — 윤년 확인
         assertTrue(DaumKboScheduleSource.buildUrl(YearMonth.of(2028, 2)).contains("toDate=20280229"))
     }
+
+    @Test
+    fun `선발 투수 시간 구장 출처id 를 함께 가져온다`() {
+        val games = parsed()
+
+        val game = games.first { it.homeTeamId == "SK" && it.awayTeamId == "LG" }
+        assertEquals("김민준", game.homeStartPitcher)
+        assertEquals("웰스", game.awayStartPitcher)
+        assertEquals("18:30", game.startTime)
+        assertEquals("인천 SSG 랜더스 필드", game.stadium)
+        assertEquals("80101044", game.externalId)
+    }
+
+    @Test
+    fun `시간 형식이 아니면 버린다 — 화면 표시용이라 없어도 무방하다`() {
+        assertEquals("18:30", DaumKboScheduleSource.formatTime("1830"))
+        assertNull(DaumKboScheduleSource.formatTime("18:30"))
+        assertNull(DaumKboScheduleSource.formatTime(""))
+        assertNull(DaumKboScheduleSource.formatTime("abcd"))
+    }
 }
