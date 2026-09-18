@@ -15,6 +15,8 @@ permissions:
 env:
   IMAGE: ghcr.io/hyunseungbeom/kbo-predictor-api
   VERCEL_CLI: vercel@59.20.0
+  # 프로젝트를 소유한 팀. 토큰 범위가 애매하면 CLI 가 개인 계정에서 프로젝트를 찾다 실패한다
+  VERCEL_SCOPE: seungbeoms-projects
 
 jobs:
   backend:
@@ -186,7 +188,7 @@ jobs:
 
       # 레포 루트에서 실행한다. Vercel 프로젝트의 Root Directory 가 web 으로 설정돼 있다.
       - name: Pull Vercel project settings
-        run: npx --yes "$VERCEL_CLI" pull --yes --environment=production --token="$VERCEL_TOKEN"
+        run: npx --yes "$VERCEL_CLI" pull --yes --environment=production --scope "$VERCEL_SCOPE" --token="$VERCEL_TOKEN"
 
       # NEXT_PUBLIC_* 는 빌드 시점에 번들에 박힌다 — 그래서 여기서 주입한다
       - name: Build
@@ -199,7 +201,7 @@ jobs:
         run: grep -rqF "$API_URL" .vercel/output/static/_next || { echo "::error::번들에 $API_URL 이 없다"; exit 1; }
 
       - name: Deploy
-        run: npx --yes "$VERCEL_CLI" deploy --prebuilt --prod --token="$VERCEL_TOKEN"
+        run: npx --yes "$VERCEL_CLI" deploy --prebuilt --prod --scope "$VERCEL_SCOPE" --token="$VERCEL_TOKEN"
 
       - name: Smoke · pages
         run: |
