@@ -5,6 +5,7 @@
  */
 
 export * from "./model/types";
+export * from "./model/chart";
 export * from "./api/simulationApi";
 export * from "./api/keys";
 export * from "./hooks/useSimulation";
