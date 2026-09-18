@@ -1,6 +1,7 @@
 # CLAUDE.md
 
-> KBO Predictor — KBO 일정 · 순위 · 가을야구 진출/우승 확률 · 경기 승부 예측 웹 서비스.
+> 야르렁(야구르지렁) — KBO 승부 예보 · 순위 · 가을야구 진출/우승 확률 · 팀별 팬 게시판.
+> 서비스 이름·태그라인·로고 워드마크는 `web/lib/site` 한 곳에서 관리한다.
 > 이직 포트폴리오라 **기능 개수보다 완성도**(테스트 · 설계 이유 · 배포 링크)가 우선이다.
 
 ## 레포 구성
@@ -75,6 +76,16 @@ cd web && npm run verify                # type-check · test · lint
 | 경기 검색 조건 | `GameFilter.kt` (validate) | `web/lib/games/model/` (normalize) | 양쪽 각자 테스트 — 규칙을 바꾸면 **둘 다** 고친다 |
 | 검증 실패 응답 | `ProblemDetail` + `errors: string[]` | `ApiError.errors` | `web/lib/api/__tests__/client.test.ts` (API 002) |
 | 글 입력 규칙 | `PostRules`(길이·공백) | `web/lib/board/model/postSchema.ts`(zod) | 양쪽 각자 테스트 — **한쪽만 고치면 사용자가 헷갈린다** |
+
+### 세 번째 당사자 — 앱
+
+RN 앱이 [kbo-predictor-app](https://github.com/HyunSeungBeom/yareureong-app) 레포에서 **같은 API**
+를 본다. 레포가 달라 테스트로 묶을 수 없으니 앱이 `model/`·`api/` 파일을 **복제**하고, 앱 쪽
+COPY 검사가 (웹 레포가 옆에 체크아웃돼 있으면) 바이트 단위로 대조한다.
+
+**위 표의 계약을 고치면 앱도 고쳐야 한다.** 복제 목록은 앱 레포의 백엔드 계약 문서에 있다.
+앱 때문에 드러난 기존 구멍 하나: `WebConfig.kt` 의 CORS `allowedMethods` 에 `PUT`·`DELETE` 가
+빠져 있다(웹은 프록시로 우회 중이라 안 보인다). 앱에서 게시판 수정·삭제를 붙일 때 같이 고친다.
 
 ## 배포
 

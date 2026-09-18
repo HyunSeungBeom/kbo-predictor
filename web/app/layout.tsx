@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import Link from "next/link";
 import "./globals.css";
 import Providers from "./providers";
-import { SITE } from "@/lib/site";
+import { SITE, Wordmark } from "@/lib/site";
 import { LoginButton } from "@/lib/auth";
 import { TeamPicker } from "@/lib/teams";
 
@@ -31,8 +31,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <header className="border-b border-slate-200 bg-white">
             <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-y-2 gap-x-4 px-4 py-3">
               <nav className="flex flex-wrap items-center gap-x-5 gap-y-1">
-                <Link href="/" className="text-lg font-bold">
-                  ⚾ KBO Predictor
+                <Link href="/" className="text-lg">
+                  <Wordmark />
                 </Link>
                 <Link href="/" className="text-sm text-slate-600 hover:text-slate-900">
                   대시보드

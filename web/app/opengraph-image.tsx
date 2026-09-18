@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { OG_IMAGE, SITE } from "@/lib/site";
+import { ACCENT, OG_IMAGE, SITE, WORDMARK } from "@/lib/site";
 
 /**
  * 링크를 붙였을 때 뜨는 미리보기 이미지. 빌드 때 한 장 만들어 둔다.
@@ -28,30 +28,17 @@ export default function OpengraphImage() {
           fontSize: 40,
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 20, fontSize: 30, color: "#94a3b8" }}>
-          <div
-            style={{
-              width: 44,
-              height: 44,
-              borderRadius: 22,
-              background: "#f8fafc",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "#dc2626",
-              fontSize: 26,
-              fontWeight: 700,
-            }}
-          >
-            ⚾
-          </div>
-          KBO PREDICTOR
+        {/* 로고 워드마크 — 빨간 글자만 읽으면 «야르렁» */}
+        <div style={{ display: "flex", fontSize: 92, fontWeight: 700, letterSpacing: -2 }}>
+          {WORDMARK.map(({ char, accent }, i) => (
+            <span key={i} style={{ color: accent ? ACCENT : "#f8fafc" }}>
+              {char}
+            </span>
+          ))}
         </div>
-        <div style={{ fontSize: 68, fontWeight: 700, lineHeight: 1.2 }}>
-          오늘 경기, 선발까지 보고 예측합니다
-        </div>
-        <div style={{ fontSize: 34, color: "#cbd5e1", lineHeight: 1.4 }}>
-          실시간 순위 · 몬테카를로 우승 확률 · 경기 일정 검색
+        <div style={{ fontSize: 46, fontWeight: 700, lineHeight: 1.3 }}>{SITE.tagline}</div>
+        <div style={{ fontSize: 30, color: "#cbd5e1", lineHeight: 1.4 }}>
+          선발 투수까지 보고 계산한 오늘 경기 승리 확률
         </div>
       </div>
     ),

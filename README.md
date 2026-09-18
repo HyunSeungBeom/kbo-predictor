@@ -1,11 +1,16 @@
-# ⚾ KBO Predictor
+# 🔴 야르렁 (야구르지렁)
 
-[![CI/CD](https://github.com/HyunSeungBeom/kbo-predictor/actions/workflows/ci.yml/badge.svg)](https://github.com/HyunSeungBeom/kbo-predictor/actions/workflows/ci.yml)
+[![CI/CD](https://github.com/HyunSeungBeom/yareureong/actions/workflows/ci.yml/badge.svg)](https://github.com/HyunSeungBeom/yareureong/actions/workflows/ci.yml)
 
-KBO 경기 일정과 **가을야구 진출확률·우승확률**, 그리고 **오늘 경기 승부 예측**을 제공하는 웹 서비스.
+**오늘 경기 승부 예보 · KBO 팬 게시판.**
+
+이름은 «야구르지렁» 의 줄임말이다 — 야구팬은 화가 많아 으르렁거린다는 데서 왔다.
+로고는 «야구르지렁» 을 쓰되 **야·르·렁만 붉게** 칠해, 빨간 글자만 읽으면 «야르렁» 이 된다.
+
+선발 투수 기록까지 반영한 승리 확률, 실시간 순위, 가을야구 진출·우승 확률, 팀별 팬 게시판.
 내 팀(응원팀)을 설정하면 해당 팀 관점으로 하이라이트한다.
 
-> 🔗 **웹: https://kbo-predictor-three.vercel.app** · **API: https://kbo-predictor-api.onrender.com/actuator/health**
+> 🔗 **웹: https://yareureong.vercel.app** · **API: https://kbo-predictor-api.onrender.com/actuator/health**
 >
 > 무료 인스턴스라 15분간 요청이 없으면 잠든다 — **첫 접속은 서버가 깨어나는 1분가량이 걸린다.**
 

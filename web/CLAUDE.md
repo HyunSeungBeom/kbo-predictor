@@ -23,7 +23,9 @@ lib/{도메인}/      games · teams · standings · simulation · prediction  (
 - **목록 필터는 URL 이 갖는다** — `model/urlFilter`(순수 함수) + `hooks/use*Filter`, `router.replace` + `scroll: false`
 - 컴포넌트는 **이름 export**, `hooks/` · `store/` · `ui/` 파일은 `"use client"`
 - **버튼 묶음을 `<label>` 로 감싸지 않는다** — `role="group"` + `aria-labelledby`
-- 의존성은 **쓰는 화면이 생길 때 근거와 함께** 넣는다. RHF · zustand · zod 는 아직 안 들였다
+- 의존성은 **쓰는 화면이 생길 때 근거와 함께** 넣는다. RHF · zod 는 게시판 입력 화면이 생기며
+  들였고(`lib/board`), zustand 는 아직 안 들였다 — 서버 상태는 Query 가, 내 팀 설정은
+  `lib/teams/store` 가 들고 있어 쓸 자리가 없다
 
 근거 · 예시 · 규칙별 검사표: **[docs/frontend-conventions.md](docs/frontend-conventions.md)**
 
